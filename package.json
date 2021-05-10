@@ -1,0 +1,34 @@
+{
+  "name": "auto-import-module-webpack-plugin",
+  "version": "1.0.0",
+  "description": "auto import module webpack plugin",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \\\"Error: no dist specified\\\" && exit 1"
+  },
+
+
+
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maweimaweima/auto-import-module-webpack-plugin.git"
+  },
+  "keywords": [
+    "auto",
+    "import",
+    "module",
+    "webpack",
+    "plugin"
+  ],
+  "author": "deepFish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maweimaweima/auto-import-module-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/maweimaweima/auto-import-module-webpack-plugin#readme",
+  "dependencies": {
+    "chokidar": "^3.5.1"
+  }
+}
