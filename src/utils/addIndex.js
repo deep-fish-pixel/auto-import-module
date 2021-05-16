@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { logGreen } = require("./log");
+const { success } = require("./log");
 
 /**
  * 添加默认入口文件index
@@ -19,7 +19,7 @@ function writeFile(file){
   const data = new Uint8Array(Buffer.from(`export default {};`));
   fs.writeFile(file, data, (err) => {
     if (err) throw err;
-    logGreen(`自动生成${file.replace(process.cwd(), '')}`);
+    success(`自动生成${file.replace(process.cwd(), '')}`);
   });
 }
 

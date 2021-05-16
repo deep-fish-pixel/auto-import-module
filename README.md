@@ -15,3 +15,5 @@ new OutputReplaceWebpackPlugin({
     conent: addIndex(new Date(), 'yyyy-MM-dd~hh:mm:ss'),
 })
 ```
+
+### 配置支持ts、过滤后缀、自动生成index、对import结果组装方式
