@@ -1,13 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const { success } = require("./log");
+const { getModuleOptions } = require('./moduleOptions');
 
 /**
  * 添加默认入口文件index
  * @param dir
  */
 function addIndex(dir) {
-  const file =path.join(dir, 'index.js');
+  const { extension } = getModuleOptions();
+  const file =path.join(dir, `index${extension}`);
   fs.access(file, fs.constants.F_OK, (err) => {
     if (err) {
       writeFile(file);

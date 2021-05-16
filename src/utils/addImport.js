@@ -2,28 +2,35 @@ const fs = require('fs');
 const path = require('path');
 const { getParent } = require("./file");
 const { success } = require("./log");
-const { getRoot } = require('./root');
+const { getModuleOptions } = require('./moduleOptions');
 const directory = require("./directory");
 const batchExecute = require("./batchExecute");
 
 
 /**
- * 添加默认入口文件index
- * @param dir
+ * 添加引入并导出模块
+ * @param fileName
  */
 function addImport(fileName) {
   const parentDir = getParent(fileName);
-  const rootDir = getRoot();
-  if (fileName !== rootDir) {
-    const parentDirIndex = path.join(parentDir, 'index.js');
-    batchExecute(parentDirIndex, () => {
+  const { dir } = getModuleOptions();
+  if (fileName !== dir) {
+    const { extension } = getModuleOptions();
+    const indexFileName = `index${extension}`;
+    const parentDirIndex = path.join(parentDir, indexFileName);
+    batchExecute(parentDirIndex).then(() => {
       writeImportFile(parentDirIndex, directory.getChildren(parentDir, {
-        exclude: [ 'index.js' ],
+        exclude: [ indexFileName ],
       }));
     });
   }
 }
 
+/**
+ * 输出模块
+ * @param parentDirIndex
+ * @param files
+ */
 function writeImportFile(parentDirIndex, files){
   let importModule = '', ouputModule = files.length ? '\n' : '';
   files.forEach((file) => {
@@ -31,8 +38,10 @@ function writeImportFile(parentDirIndex, files){
     importModule += `import ${parentName} from './${parentName}';\n`;
     ouputModule += `  ${parentName},\n`;
   });
-  const data = new Uint8Array(Buffer.from(`${importModule}
-export default {${ouputModule}};
+  if (importModule) {
+    importModule += '\n';
+  }
+  const data = new Uint8Array(Buffer.from(`${importModule}export default {${ouputModule}};
 `));
   fs.writeFile(parentDirIndex, data, (err) => {
     if (err) throw err;

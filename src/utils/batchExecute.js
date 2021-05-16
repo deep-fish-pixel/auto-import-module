@@ -5,10 +5,21 @@ const cache = new Map();
  * @param callback
  * @param delayTime
  */
-module.exports = function (key, callback, delayTime = 10) {
-  const timer = cache.get(key);
+module.exports = function (key, delayTime = 10) {
+  const { timer, reject, } = cache.get(key) || {};
   if(timer) {
+    // 清除上一次延迟记录
     clearTimeout(timer);
+    reject();
   }
-  cache.set(key, setTimeout(callback, delayTime));
+
+  return new Promise((resolve, reject) => {
+    cache.set(key, {
+      timer: setTimeout(() => {
+        resolve();
+        cache.delete(key);
+      }, delayTime),
+      reject
+    });
+  }).catch(() => {});
 };
