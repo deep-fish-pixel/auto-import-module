@@ -1,19 +1,8 @@
 const { getParent } = require("./file");
+const executeByCondition = require('./executeByCondition');
 
 const directories = new Map();
 
-/**
- * 根据条件决定是否执行
- * @param conditon
- * @param callback
- */
-function executeByCondtion(conditon, callback, otherResult){
-  if (conditon === true || conditon && conditon.length > 0) {
-    return callback();
-  } else {
-    return otherResult;
-  }
-}
 
 module.exports = {
   add(path) {
@@ -32,7 +21,7 @@ module.exports = {
   },
   getChildren(parentDir, { exclude } = {}){
     const children = directories.get(parentDir) || [];
-    return executeByCondtion(exclude, () => {
+    return executeByCondition(exclude, () => {
       return children.filter(file => !exclude.some(flag => file.indexOf(flag) >= 0))
     }, children);
   }

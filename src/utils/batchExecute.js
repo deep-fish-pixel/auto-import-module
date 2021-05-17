@@ -5,12 +5,12 @@ const cache = new Map();
  * @param callback
  * @param delayTime
  */
-module.exports = function (key, delayTime = 10) {
+module.exports = function (key, delayTime = 30) {
   const { timer, reject, } = cache.get(key) || {};
   if(timer) {
     // 清除上一次延迟记录
     clearTimeout(timer);
-    reject();
+    reject(new Error('clear execute!!!'));
   }
 
   return new Promise((resolve, reject) => {
@@ -21,5 +21,5 @@ module.exports = function (key, delayTime = 10) {
       }, delayTime),
       reject
     });
-  }).catch(() => {});
+  });
 };

@@ -1,33 +1,27 @@
 {
-  "name": "auto-import-module-webpack-plugin",
+  "name": "auto-import-module",
   "version": "1.0.0",
-  "description": "auto import module webpack plugin",
+  "description": "auto import module",
   "main": "src/index.js",
   "scripts": {
-    "start": "node test/index.js",
+    "start": "node test/javsscript.js",
     "test": "echo \\\"Error: no dist specified\\\" && exit 1"
   },
-
-
-
-
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maweimaweima/auto-import-module-webpack-plugin.git"
+    "url": "git+https://github.com/maweimaweima/auto-import-module.git"
   },
   "keywords": [
     "auto",
     "import",
     "module",
-    "webpack",
-    "plugin"
   ],
   "author": "deepFish",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maweimaweima/auto-import-module-webpack-plugin/issues"
+    "url": "https://github.com/maweimaweima/auto-import-module/issues"
   },
-  "homepage": "https://github.com/maweimaweima/auto-import-module-webpack-plugin#readme",
+  "homepage": "https://github.com/maweimaweima/auto-import-module#readme",
   "dependencies": {
     "chokidar": "^3.5.1"
   }

@@ -1,5 +1,10 @@
 # auto-import-module
-auto import module webpack plugin
+auto import module
+
+### About
+Auto assemble files and directories by using es module.
+This tool will auto create default index as directory entry file.
+This tool supports .js .ts .scss .less .stylus and so on.
 
 ### Install
 Install with npm:
@@ -9,11 +14,44 @@ Install with npm:
 ### Examples
 
 ```
-new OutputReplaceWebpackPlugin({
-    file: 'test.json',
-    match: /\d+\/\d+\/\d+/g,
-    conent: addIndex(new Date(), 'yyyy-MM-dd~hh:mm:ss'),
-})
+// js
+autoImportModule({
+  dir: path.join(process.cwd(), 'temp'),
+  extension: '.js',
+});
+// ts
+autoImportModule({
+  dir: path.join(process.cwd(), 'temp'),
+  extension: '.ts',
+});
+// less
+autoImportModule({
+  dir: path.join(process.cwd(), 'temp'),
+  extension: '.less',
+  importModuleOnly: true,
+});
+// scss
+autoImportModule({
+  dir: path.join(process.cwd(), 'temp'),
+  extension: '.scss',
+  importModuleOnly: true,
+});
+// stylus
+autoImportModule({
+  dir: path.join(process.cwd(), 'temp'),
+  extension: '.styl',
+  importModuleOnly: true,
+});
+
+
+
 ```
 
-### 配置支持ts、过滤后缀、自动生成index、对import结果组装方式
+
+### options
+
+| option | introduction |
+| ------- | ------- |
+|   dir      |     set watch root directory    |
+|   extension      |     set file type, default .js    |
+|   importModuleOnly      |     set no export, only import module, defaul false   |

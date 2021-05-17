@@ -12,6 +12,7 @@ module.exports = function (options = {}) {
   options = Object.assign({
     dir: path.join(process.cwd(), 'temp'),
     extension: '.js',
+    importModuleOnly: false,
   }, options);
   setModuleOptions(options);
   const watcher = chokidar.watch(options.dir, {
@@ -21,22 +22,20 @@ module.exports = function (options = {}) {
 
   watcher
     .on('add', path => {
-      // console.log(`File ${path.replace(process.cwd(), '')} has been added`)
       directory.add(path);
       addImport(path);
     })
     .on('unlink', path => {
-      // console.log(`File ${path.replace(process.cwd(), '')} has been removed`)
       directory.remove(path);
+      addImport(path);
     })
     .on('addDir', path => {
-      // console.log(`Directory ${path.replace(process.cwd(), '')} has been added`)
       addIndex(path);
       directory.add(path);
       addImport(path);
     })
     .on('unlinkDir', path => {
-      // console.log(`Directory ${path.replace(process.cwd(), '')} has been removed`)
       directory.remove(path);
+      addImport(path);
     });
 }
