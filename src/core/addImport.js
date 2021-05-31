@@ -101,7 +101,7 @@ function replaceExportModule(oldExportModule, exportModulePrev, exportModuleTail
 function writeImportFile(parentDirIndex, files, isRemove, removeFile){
   const { importModuleOnly, extension } = getModuleOptions();
   let importModule = '', ouputModule = files.length ? '\n' : '';
-  const extensionExpReg = new RegExp(`(${extension.replace('.', '\\.')}|\/\\w+)$`)
+  const extensionExpReg = new RegExp(`(${extension.replace('.', '\\.')}|\\/[\\w\\-]+)$`)
   files.forEach((file) => {
     // 引入文件后缀与配置的扩展后缀相同
     if (file.match(extensionExpReg)) {

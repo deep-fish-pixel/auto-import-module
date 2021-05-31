@@ -1,6 +1,6 @@
 const _options = {
   root: '',
-  extension: '',
+  extension: '.js',
   importModuleOnly: false,
 };
 

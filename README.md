@@ -9,7 +9,7 @@ This tool supports .js .ts .scss .less .stylus and so on.
 ### Install
 Install with npm:
 
-`$ npm install --save-dev auto-import-module`
+`$ npm install --save auto-import-module`
 
 ### Examples
 

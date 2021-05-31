@@ -39,6 +39,7 @@ module.exports = function (options = {}) {
 }
 
 Object.assign(module.exports, {
+  setAutoImportOptions: setModuleOptions,
   addFileImport,
   addDirImport,
   removeFileImport,

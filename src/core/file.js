@@ -1,6 +1,6 @@
 
 module.exports = {
   getParent(path) {
-    return path.replace(/\/\w+(\.\w+)?$/, '');
+    return path.replace(/\/[\w-]+(\.\w+|\/)?$/, '');
   }
 }
