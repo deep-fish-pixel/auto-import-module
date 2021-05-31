@@ -1,41 +1,46 @@
 /**
  * 监控文件夹
  */
-const path = require('path')
 const chokidar = require('chokidar');
-const addIndex = require('./utils/addIndex');
-const addImport = require('./utils/addImport');
-const { setModuleOptions } = require('./utils/moduleOptions');
-const directory = require("./utils/directory");
+const {
+  addFileImport,
+  addDirImport,
+  removeFileImport,
+  removeDirImport
+} = require('./core/addImport');
+const { setModuleOptions } = require('./core/moduleOptions');
 
 module.exports = function (options = {}) {
   options = Object.assign({
-    dir: path.join(process.cwd(), 'temp'),
-    extension: '.js',
-    importModuleOnly: false,
+    root: '',
+    extension: '.js'
   }, options);
+
   setModuleOptions(options);
-  const watcher = chokidar.watch(options.dir, {
+
+  const watcher = chokidar.watch(options.root, {
     ignored: /(^|[\/\\])\../, // ignore dotfiles
     persistent: true
   });
 
   watcher
-    .on('add', path => {
-      directory.add(path);
-      addImport(path);
+    .on('add', file => {
+      addFileImport(file);
     })
-    .on('unlink', path => {
-      directory.remove(path);
-      addImport(path);
+    .on('unlink', file => {
+      removeFileImport(file);
     })
-    .on('addDir', path => {
-      addIndex(path);
-      directory.add(path);
-      addImport(path);
+    .on('addDir', dir => {
+      addDirImport(dir);
     })
-    .on('unlinkDir', path => {
-      directory.remove(path);
-      addImport(path);
+    .on('unlinkDir', dir => {
+      removeDirImport(dir);
     });
 }
+
+Object.assign(module.exports, {
+  addFileImport,
+  addDirImport,
+  removeFileImport,
+  removeDirImport
+})

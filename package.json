@@ -1,10 +1,11 @@
 {
   "name": "auto-import-module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "auto import module",
   "main": "src/index.js",
   "scripts": {
     "start": "node test/javsscript.js",
+    "debug": "node --inspect test/javsscript.js",
     "test": "echo \\\"Error: no dist specified\\\" && exit 1"
   },
   "repository": {
@@ -14,7 +15,7 @@
   "keywords": [
     "auto",
     "import",
-    "module",
+    "module"
   ],
   "author": "deepFish",
   "license": "ISC",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/maweimaweima/auto-import-module#readme",
   "dependencies": {
+    "cache-dir-find": "^1.0.3",
     "chokidar": "^3.5.1"
   }
 }

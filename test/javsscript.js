@@ -4,7 +4,9 @@
 const path = require('path');
 const autoImportModule = require('../src/index')
 
-autoImportModule({
-  dir: path.join(process.cwd(), 'temp'),
-  extension: '.js',
-});
+setTimeout(() => {
+  autoImportModule({
+    root: path.join(process.cwd(), 'temp'),
+    extension: '.js',
+  });
+}, 3000)

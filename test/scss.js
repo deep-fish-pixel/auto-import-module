@@ -5,7 +5,7 @@ const path = require('path');
 const autoImportModule = require('../src/index')
 
 autoImportModule({
-  dir: path.join(process.cwd(), 'temp'),
+  root: path.join(process.cwd(), 'temp'),
   extension: '.scss',
   importModuleOnly: true,
 });
