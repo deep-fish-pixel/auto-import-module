@@ -40,7 +40,7 @@ function importFile(fileName, isRemove) {
       if (cacheDirFind.getParent(parentDirIndex)) {
         writeImportFile(parentDirIndex, cacheDirFind.getChildren(parentDir, {
           exclude: [ indexFileName ],
-        }), isRemove, fileName.replace(root.replace(/[\w-]+$/, ''), ''));
+        }), isRemove, fileName.replace(root.replace(/[\w-]+\/?$/, ''), ''));
       }
     }).catch(() => {});
   }
