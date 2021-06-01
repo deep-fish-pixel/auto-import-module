@@ -106,11 +106,12 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
     // 引入文件后缀与配置的扩展后缀相同
     if (file.match(extensionExpReg)) {
       const parentName = file.replace(/[\s\S]*\/|\.\w+/g, '');
+      const parentModuleName = parentName.replace(/([^\w\d$]+)(\w)/g, (all, seperator, char) => char.toUpperCase());
       if (importModuleOnly) {
         importModule += `${importFlags[extension]} './${parentName}${importSuffixes[extension] ? extension : ''}';\n`;
       } else {
-        importModule += `import ${parentName} from './${parentName}${importSuffixes[extension] ? extension : ''}';\n`;
-        ouputModule += `  ...${parentName},\n`;
+        importModule += `import ${parentModuleName} from './${parentName}${importSuffixes[extension] ? extension : ''}';\n`;
+        ouputModule += `  ...${parentModuleName},\n`;
       }
     }
   });
