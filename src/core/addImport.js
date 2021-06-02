@@ -91,7 +91,6 @@ function replaceExportModule(oldExportModule, exportModulePrev, exportModuleTail
   if (oldExportModule && oldExportModule.match(exportModulesRegExp)) {
     let removeExportModule = oldExportModule;
     oldExportModule.replace(/import\s+(\w+)\s+from/g, (all, module) => {
-      debugger
       removeExportModule = removeExportModule.replace(new RegExp(`([^\\n]*[^\\w\\n]|^)${module}[^\\n]*\\n` ,'g'), '');
     })
     return removeExportModule.replace(exportModulesRegExp, (all, startStr, endStr) => `${exportModulePrev.match(/\n$/) ? exportModulePrev : exportModulePrev + '\n' }${endStr}`);
@@ -129,7 +128,7 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
     const output = `${importModule}`
       + executeByCondition(importModuleOnly,
         '',
-        replaceExportModule(data, `export default {${ouputModule}`, '};'));
+        replaceExportModule(data, `export default {${ouputModule}`, '};')).replace(/,(\s*};?\s*$)/, '$1');
     const outputBuffer = new Uint8Array(Buffer.from(output));
     fs.writeFile(parentDirIndex, outputBuffer, (err) => {
       if (err) {
