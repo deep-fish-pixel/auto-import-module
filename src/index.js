@@ -9,11 +9,16 @@ const {
   removeDirImport
 } = require('./core/addImport');
 const { setModuleOptions } = require('./core/moduleOptions');
+const exportModuleTypes = require('./core/constants/exportModuleTypes');
+
 
 module.exports = function (options = {}) {
   options = Object.assign({
     root: '',
-    extension: '.js'
+    extension: '.js',
+    exportModuleTypeDefault: exportModuleTypes.SPREAD_MODULE,
+    exportModuleTypes: {
+    },
   }, options);
 
   setModuleOptions(options);
@@ -43,5 +48,6 @@ Object.assign(module.exports, {
   addFileImport,
   addDirImport,
   removeFileImport,
-  removeDirImport
+  removeDirImport,
+  exportModuleTypes
 })

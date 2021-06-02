@@ -7,6 +7,7 @@ const { getModuleOptions } = require('./moduleOptions');
 const batchExecute = require('./batchExecute');
 const executeByCondition = require('./executeByCondition');
 const readFile = require('./readFile');
+const getExportModule = require('./getExportModule');
 
 const importFlags = {
   '.js': 'import',
@@ -88,7 +89,12 @@ function removeDirImport(dir) {
 function replaceExportModule(oldExportModule, exportModulePrev, exportModuleTail){
   const exportModulesRegExp = /^[^:]*(,?\s*\n)(\s*['"]?[^:\s]+['"]?:)/;
   if (oldExportModule && oldExportModule.match(exportModulesRegExp)) {
-    return oldExportModule.replace(exportModulesRegExp, (all, startStr, endStr) => `${exportModulePrev.match(/\n$/) ? exportModulePrev : exportModulePrev + '\n' }${endStr}`);
+    let removeExportModule = oldExportModule;
+    oldExportModule.replace(/import\s+(\w+)\s+from/g, (all, module) => {
+      debugger
+      removeExportModule = removeExportModule.replace(new RegExp(`([^\\n]*[^\\w\\n]|^)${module}[^\\n]*\\n` ,'g'), '');
+    })
+    return removeExportModule.replace(exportModulesRegExp, (all, startStr, endStr) => `${exportModulePrev.match(/\n$/) ? exportModulePrev : exportModulePrev + '\n' }${endStr}`);
   }
   return `${exportModulePrev}${exportModuleTail}`;
 }
@@ -102,16 +108,17 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
   const { importModuleOnly, extension } = getModuleOptions();
   let importModule = '', ouputModule = files.length ? '\n' : '';
   const extensionExpReg = new RegExp(`(${extension.replace('.', '\\.')}|\\/[\\w\\-]+)$`)
+
   files.forEach((file) => {
     // 引入文件后缀与配置的扩展后缀相同
     if (file.match(extensionExpReg)) {
       const parentName = file.replace(/[\s\S]*\/|\.\w+/g, '');
-      const parentModuleName = parentName.replace(/([^\w\d$]+)(\w)/g, (all, seperator, char) => char.toUpperCase());
+      const parentModuleName = parentName.replace(/([^\da-zA-Z]+)(\w)/g, (all, seperator, char) => char.toUpperCase());
       if (importModuleOnly) {
         importModule += `${importFlags[extension]} './${parentName}${importSuffixes[extension] ? extension : ''}';\n`;
       } else {
         importModule += `import ${parentModuleName} from './${parentName}${importSuffixes[extension] ? extension : ''}';\n`;
-        ouputModule += `  ...${parentModuleName},\n`;
+        ouputModule += `  ${getExportModule(file, parentModuleName, parentName)},\n`;
       }
     }
   });

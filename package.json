@@ -1,6 +1,6 @@
 {
   "name": "auto-import-module",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "auto import module",
   "main": "src/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/maweimaweima/auto-import-module#readme",
   "dependencies": {
-    "cache-dir-find": "^1.0.3",
+    "cache-dir-find": "^1.0.5",
     "chokidar": "^3.5.1",
     "console-log-cmd": "^1.0.1"
   }
