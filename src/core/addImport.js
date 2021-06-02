@@ -87,7 +87,7 @@ function removeDirImport(dir) {
 }
 
 function replaceExportModule(oldExportModule, exportModulePrev, exportModuleTail){
-  const exportModulesRegExp = /^[^:]*(,?\s*\n)(\s*['"]?[^:\s]+['"]?:)/;
+  const exportModulesRegExp = /^[^:]*(,?\s*\n)(\s*['"]?[^:\s]+['"]?:|\s*};?\s*$)/;
   if (oldExportModule && oldExportModule.match(exportModulesRegExp)) {
     let removeExportModule = oldExportModule;
     oldExportModule.replace(/import\s+(\w+)\s+from/g, (all, module) => {
