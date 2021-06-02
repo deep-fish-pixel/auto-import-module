@@ -1,12 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const cacheDirFind = require('cache-dir-find');
+const { success, warn, error} = require('console-log-cmd');
 const { getParent } = require('./file');
 const { getModuleOptions } = require('./moduleOptions');
 const batchExecute = require('./batchExecute');
 const executeByCondition = require('./executeByCondition');
 const readFile = require('./readFile');
-const { success, warn, error} = require('./log');
 
 const importFlags = {
   '.js': 'import',
@@ -122,8 +122,7 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
     const output = `${importModule}`
       + executeByCondition(importModuleOnly,
         '',
-        replaceExportModule(data, `export default {${ouputModule}`, '};'))
-      + '\n';
+        replaceExportModule(data, `export default {${ouputModule}`, '};'));
     const outputBuffer = new Uint8Array(Buffer.from(output));
     fs.writeFile(parentDirIndex, outputBuffer, (err) => {
       if (err) {
