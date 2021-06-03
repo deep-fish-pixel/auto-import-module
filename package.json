@@ -25,6 +25,7 @@
   "homepage": "https://github.com/maweimaweima/auto-import-module#readme",
   "dependencies": {
     "cache-dir-find": "^1.0.5",
+    "cache-io-disk": "^1.0.0",
     "chokidar": "^3.5.1",
     "console-log-cmd": "^1.0.1"
   }

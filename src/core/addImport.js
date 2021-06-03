@@ -1,12 +1,11 @@
-const fs = require('fs');
 const path = require('path');
+const { readFile, writeFile } = require('cache-io-disk');
 const cacheDirFind = require('cache-dir-find');
 const { success, warn, error} = require('console-log-cmd');
 const { getParent } = require('./file');
 const { getModuleOptions } = require('./moduleOptions');
 const batchExecute = require('./batchExecute');
 const executeByCondition = require('./executeByCondition');
-const readFile = require('./readFile');
 const getExportModule = require('./getExportModule');
 
 const importFlags = {
@@ -130,9 +129,9 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
         '',
         replaceExportModule(data, `export default {${ouputModule}`, '};')).replace(/,(\s*};?\s*$)/, '$1');
     const outputBuffer = new Uint8Array(Buffer.from(output));
-    fs.writeFile(parentDirIndex, outputBuffer, (err) => {
-      if (err) {
-        return error(`[自动导入] ${err.message}`);
+    writeFile(parentDirIndex, outputBuffer).then((result) => {
+      if (result === false) {
+        return error(`[自动导入] 写入文件失败`);
       }
       (isRemove ? warn : success )(`[自动导入] ${isRemove ? '删除模块' : '组装模块'}成功: ${removeFile}`);
     });
