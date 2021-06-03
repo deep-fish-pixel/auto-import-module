@@ -128,8 +128,7 @@ function writeImportFile(parentDirIndex, files, isRemove, removeFile){
       + executeByCondition(importModuleOnly,
         '',
         replaceExportModule(data, `export default {${ouputModule}`, '};')).replace(/,(\s*};?\s*$)/, '$1');
-    const outputBuffer = new Uint8Array(Buffer.from(output));
-    writeFile(parentDirIndex, outputBuffer).then((result) => {
+    writeFile(parentDirIndex, output).then((result) => {
       if (result === false) {
         return error(`[自动导入] 写入文件失败`);
       }
