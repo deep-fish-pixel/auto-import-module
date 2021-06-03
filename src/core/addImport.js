@@ -31,7 +31,7 @@ const importSuffixes = {
 function importFile(fileName, isRemove) {
   const parentDir = getParent(fileName);
   const { root } = getModuleOptions();
-  if (fileName !== root) {
+  if (fileName !== root && `${fileName}/` !== root) {
     const { extension } = getModuleOptions();
     const indexFileName = `index${extension}`;
     const parentDirIndex = path.join(parentDir, indexFileName);
